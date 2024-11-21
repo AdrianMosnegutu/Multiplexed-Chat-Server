@@ -112,7 +112,7 @@ void broadcast_message(socket_t server_socket, socket_t sending_socket, fd_set *
 }
 
 void handle_console_command(socket_t server_socket, fd_set *master_fds, socket_t max_fd) {
-    char command[256];
+    char command[16] = {0};
     fgets(command, sizeof command, stdin);
     command[strlen(command) - 1] = '\0';
 

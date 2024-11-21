@@ -24,9 +24,6 @@ int main(int argc, char *argv[]) {
 }
 
 void handle_communication_with_server(socket_t client_socket, const char *username) {
-    char message[MAX_MESSAGE_LENGTH];
-    char response[MAX_RESPONSE_LENGTH];
-
     // Send the username to the server
     if (send(client_socket, username, strlen(username), 0) <= 0) {
         close(client_socket);
@@ -53,8 +50,10 @@ void handle_communication_with_server(socket_t client_socket, const char *userna
 
         // Handle input from the console
         if (FD_ISSET(STDIN_FILENO, &copy_fds)) {
+            char message[MAX_MESSAGE_LENGTH] = {0};
+            char response[MAX_RESPONSE_LENGTH] = {0};
+
             // Read the message from the console and trim the newline character
-            memset(message, 0, MAX_MESSAGE_LENGTH);
             fgets(message, MAX_MESSAGE_LENGTH, stdin);
             message[strlen(message) - 1] = '\0';
 
@@ -75,7 +74,7 @@ void handle_communication_with_server(socket_t client_socket, const char *userna
 
         // Handle messages from the server
         if (FD_ISSET(client_socket, &copy_fds)) {
-            memset(response, 0, MAX_RESPONSE_LENGTH);
+            char response[MAX_RESPONSE_LENGTH] = {0};
 
             // Receive the message from the server
             if (recv(client_socket, response, MAX_RESPONSE_LENGTH, 0) <= 0) {
