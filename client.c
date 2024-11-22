@@ -10,6 +10,9 @@
 
 #include "utils/client_utils.h"
 
+static void read_username(char *username);
+static void handle_communication_with_server(socket_t client_socket, const char *username);
+
 int main(int argc, char *argv[]) {
     socket_t client_socket = create_tcp_socket();
     struct sockaddr_in server_address = initialize_ipv4_address(SERVER_IP, SERVER_PORT);
@@ -23,7 +26,7 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void handle_communication_with_server(socket_t client_socket, const char *username) {
+static void handle_communication_with_server(socket_t client_socket, const char *username) {
     // Send the username to the server
     if (send(client_socket, username, strlen(username), 0) <= 0) {
         close(client_socket);
@@ -53,8 +56,11 @@ void handle_communication_with_server(socket_t client_socket, const char *userna
             char message[MAX_MESSAGE_LENGTH] = {0};
             char response[MAX_RESPONSE_LENGTH] = {0};
 
-            // Read the message from the console and trim the newline character
-            fgets(message, MAX_MESSAGE_LENGTH, stdin);
+            // Read the message from the console and remove the newline character
+            if (fgets(message, MAX_MESSAGE_LENGTH, stdin) == NULL) {
+                printf("Error reading from stdin...\n");
+                continue;
+            }
             message[strlen(message) - 1] = '\0';
 
             // Skip empty messages
@@ -90,10 +96,15 @@ void handle_communication_with_server(socket_t client_socket, const char *userna
     close(client_socket);
 }
 
-void read_username(char *username) {
+static void read_username(char *username) {
     printf("Enter username: ");
-    fgets(username, MAX_USERNAME_LENGTH, stdin);
-    username[strlen(username) - 1] = '\0';
+
+    if (fgets(username, MAX_USERNAME_LENGTH, stdin) == NULL) {
+        printf("Error reading the username. Using default username Anonymous...\n");
+        strcpy(username, "Anonymous");
+        return;
+    }
+    username[strcspn(username, "\n")] = '\0';
 
     // Set a default username if none is provided
     if (strlen(username) == 0) {

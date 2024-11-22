@@ -10,6 +10,11 @@
 
 #include "utils/server_utils.h"
 
+void handle_console_command(socket_t server_socket, fd_set *master_fds, socket_t max_fd);
+void handle_incoming_connection(socket_t server_socket, fd_set *master_fds, socket_t *max_fd);
+void handle_communication_with_client(socket_t server_socket, socket_t client_socket, fd_set *master_fds, socket_t max_fd);
+void broadcast_message(socket_t server_socket, socket_t sending_socket, fd_set *master_fds, socket_t max_fd, char *message);
+
 int main(int argc, char *argv[]) {
     socket_t server_socket = create_tcp_socket();
     struct sockaddr_in address = initialize_ipv4_address("", SERVER_PORT);

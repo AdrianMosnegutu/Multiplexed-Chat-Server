@@ -65,13 +65,13 @@ This project is a multi-client TCP-based group chat application built in C. It i
     #### Compile the server
 
     ``` bash
-    gcc -o chat_server server.c -lpthread
+    gcc -o chat_server server.c utils/server_utils.c utils/general_utils.c 
     ```
 
     #### Compile the client
     
     ``` bash
-    gcc -o chat_client client.c -lpthread
+    gcc -o chat_client client.c utils/client_utils.c utils/general_utils.c 
     ```
 
 3. **Run the server**
@@ -91,9 +91,10 @@ This project is a multi-client TCP-based group chat application built in C. It i
 ## File Structure
 
 - [`utils/`](./utils/)
-    - [`server_utils.h`](./utils/server_utils.h): Utility functions for server-side socket management and error handling.
-    - [`client_utils.h`](./utils/client_utils.h): Utility functions for client-side socket management and input handling.
-    - [`socket_utils.h`](./utils/socket_utils.h): Shared utilities for socket creation, IPv4 address initialization, and error handling.
+    - [`general_utils.h`](./utils/general_utils.h)/[`server_utils.h`](./utils/server_utils.h)/[`client_utils.h`](./utils/client_utils.h): Header files for respective utility functions.
+    - [`general_utils.c`](./utils/general_utils.c): Shared utilities for socket creation, IPv4 address initialization, and error handling.
+    - [`server_utils.c`](./utils/server_utils.c): Utility functions for server-side socket management and error handling.
+    - [`client_utils.c`](./utils/client_utils.c): Utility functions for client-side socket management and input handling.
 - [`server.c`](./server.c): Main server logic, including connection handling and message broadcasting.
 - [`client.c`](./client.c): Main client logic, including server connection, message sending, and receiving.
 

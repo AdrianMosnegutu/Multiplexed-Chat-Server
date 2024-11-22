@@ -1,7 +1,15 @@
 #pragma once
 
+#include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+
 #define SERVER_IP "127.0.0.1"  // The server IP address
 #define SERVER_PORT 9999       // The server port
+
+#define MAX_USERNAME_LENGTH 32                                          // The maximum length of a username
+#define MAX_MESSAGE_LENGTH 256                                          // The maximum length of a message
+#define MAX_RESPONSE_LENGTH (MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH)  // The maximum length of a response
 
 /**
  * @typedef socket_t
@@ -12,10 +20,6 @@
  */
 typedef int socket_t;
 
-const uint MAX_USERNAME_LENGTH = 32;
-const uint MAX_MESSAGE_LENGTH = 256;
-const uint MAX_RESPONSE_LENGTH = MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH;
-
 /**
  * @brief Returns the maximum of two socket descriptors.
  *
@@ -25,9 +29,7 @@ const uint MAX_RESPONSE_LENGTH = MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH;
  * @param b The second socket descriptor.
  * @return The socket descriptor with the higher value.
  */
-socket_t max_sock(socket_t a, socket_t b) { 
-    return a > b ? a : b; 
-}
+socket_t max_sock(socket_t a, socket_t b);
 
 /**
  * @brief Terminates the program and prints the provided message.
@@ -37,10 +39,7 @@ socket_t max_sock(socket_t a, socket_t b) {
  *
  * @param message The message to be printed before termination.
  */
-void terminate_with_error(const char *error_message) {
-    perror(error_message);
-    exit(EXIT_FAILURE);
-}
+void terminate_with_error(const char *error_message);
 
 /**
  * @brief Creates a TCP socket.
@@ -49,15 +48,7 @@ void terminate_with_error(const char *error_message) {
  *
  * @return socket_t The created TCP socket.
  */
-socket_t create_tcp_socket() {
-    socket_t socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-
-    if (socket_fd < 0) {
-        terminate_with_error("Socket error");
-    }
-
-    return socket_fd;
-}
+socket_t create_tcp_socket();
 
 /**
  * @brief Initializes an IPv4 address structure.
@@ -70,17 +61,4 @@ socket_t create_tcp_socket() {
  * @param port The port number.
  * @return A sockaddr_in structure initialized with the specified host and port.
  */
-struct sockaddr_in initialize_ipv4_address(const char *host, uint port) {
-    struct sockaddr_in address;
-
-    address.sin_family = AF_INET;    // IPv4 address family
-    address.sin_port = htons(port);  // convert to network byte order
-
-    if (strlen(host) > 0) {
-        address.sin_addr.s_addr = inet_addr(host);  // the given host
-    } else {
-        address.sin_addr.s_addr = INADDR_ANY;  // any available
-    }
-
-    return address;
-}
+struct sockaddr_in initialize_ipv4_address(const char *host, uint port);
