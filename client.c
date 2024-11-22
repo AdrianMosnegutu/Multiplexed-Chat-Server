@@ -61,7 +61,7 @@ static void handle_communication_with_server(socket_t client_socket, const char 
                 printf("Error reading from stdin...\n");
                 continue;
             }
-            message[strlen(message) - 1] = '\0';
+            message[strcspn(message, "\n")] = '\0';
 
             // Skip empty messages
             if (strlen(message) == 0) {
