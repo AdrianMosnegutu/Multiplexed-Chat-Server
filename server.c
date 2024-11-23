@@ -41,6 +41,7 @@ int main(int argc, char *argv[]) {
 
         // Wait for activity on the file descriptors
         if (select(max_fd + 1, &copy_fds, NULL, NULL, NULL) < 0) {
+            close_all_client_sockets();
             shutdown_server(server_socket, "Select error");
         }
 
