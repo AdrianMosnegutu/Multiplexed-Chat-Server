@@ -69,6 +69,10 @@ static void handle_incoming_connection() {
         return;
     }
 
+    // Add the new client socket to the master set
+    FD_SET(client_socket, &read_fds);
+    max_fd = max(max_fd, client_socket);
+
     // Receive the username from the client
     usernames[client_socket] = malloc(MAX_USERNAME_LENGTH);
     if (recv(client_socket, usernames[client_socket], MAX_USERNAME_LENGTH, 0) <= 0) {
@@ -83,10 +87,6 @@ static void handle_incoming_connection() {
     // Log and broadcast the new connection
     printf("%s connected from %s:%d\n", usernames[client_socket], inet_ntoa(client_address.sin_addr), ntohs(client_address.sin_port));
     broadcast_message(client_socket, response);
-
-    // Add the new client socket to the master set
-    FD_SET(client_socket, &read_fds);
-    max_fd = max(max_fd, client_socket);
 }
 
 static void handle_communication_with_client(socket_t client_socket) {
