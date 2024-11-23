@@ -9,5 +9,5 @@ void connect_socket_to_address(socket_t socket_fd, struct sockaddr_in *address) 
         terminate_with_error("Connect error");
     }
 
-    printf("Connected to server at %s:%d\n", SERVER_IP, SERVER_PORT);
+    printf("Connected to %s:%d\n", SERVER_IP, SERVER_PORT);
 }

@@ -21,15 +21,15 @@
 typedef int socket_t;
 
 /**
- * @brief Returns the maximum of two socket descriptors.
+ * @brief Returns the maximum of two integers.
  *
- * This function compares two socket descriptors and returns the one with the higher value.
+ * This function takes two integer arguments and returns the greater of the two.
  *
- * @param a The first socket descriptor.
- * @param b The second socket descriptor.
- * @return The socket descriptor with the higher value.
+ * @param a The first integer.
+ * @param b The second integer.
+ * @return The greater of the two integers.
  */
-socket_t max_sock(socket_t a, socket_t b);
+int max(int a, int b);
 
 /**
  * @brief Terminates the program and prints the provided message.

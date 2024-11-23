@@ -4,19 +4,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void close_all_client_sockets(socket_t server_socket, fd_set *fds, socket_t max_fd) {
-    for (socket_t fd = 0; fd <= max_fd; ++fd) {
-        // Skip the standard input and the server socket
-        if (fd == STDIN_FILENO || fd == server_socket) {
-            continue;
-        }
-
-        if (FD_ISSET(fd, fds)) {
-            close(fd);
-        }
-    }
-}
-
 void shutdown_server(socket_t server_socket, const char *error_message) {
     shutdown(server_socket, SHUT_RDWR);
 

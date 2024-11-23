@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <sys/socket.h>
 
-socket_t max_sock(socket_t a, socket_t b) { 
+int max(int a, int b) { 
     return a > b ? a : b;
 }
 
