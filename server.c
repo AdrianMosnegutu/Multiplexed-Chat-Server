@@ -128,6 +128,7 @@ static void handle_console_command() {
     char command[16] = {0};
 
     if (fgets(command, sizeof command, stdin) == NULL) {
+        printf("Error reading from stdin...\n");
         return;
     }
     command[strcspn(command, "\n")] = '\0';
