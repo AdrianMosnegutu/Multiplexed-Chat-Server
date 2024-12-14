@@ -5,6 +5,10 @@
 #include <unistd.h>
 
 int start_server(int server_fd, struct sockaddr_in address) {
+    if (server_fd < 0) {
+        return EXIT_FAILURE;
+    }
+
     if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
         return EXIT_FAILURE;
     }

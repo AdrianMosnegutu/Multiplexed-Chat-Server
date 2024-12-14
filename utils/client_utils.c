@@ -4,8 +4,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int connect_to_address(int socket_fd, struct sockaddr_in address) {
-    if (connect(socket_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
+int connect_to_address(int client_fd, struct sockaddr_in address) {
+    if (client_fd < 0) {
+        return EXIT_FAILURE;
+    }
+
+    if (connect(client_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
         return EXIT_FAILURE;
     }
 

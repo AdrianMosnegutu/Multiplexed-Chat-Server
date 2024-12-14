@@ -3,6 +3,6 @@
 
 #include "general_utils.h"
 
-int connect_to_address(int socket_fd, struct sockaddr_in address);
+int connect_to_address(int client_fd, struct sockaddr_in address);
 
 #endif // CLIENT_UTILS_H
