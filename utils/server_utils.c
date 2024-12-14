@@ -4,26 +4,31 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void bind_socket_to_address(socket_t socket_fd, struct sockaddr_in *address) {
-    if (bind(socket_fd, (struct sockaddr *)address, sizeof *address) < 0) {
-        shutdown_server(socket_fd, "Bind error");
+int start_server(int server_fd, struct sockaddr_in address) {
+    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
+        return EXIT_FAILURE;
     }
+
+    if (listen(server_fd, 10) < 0) {
+        return EXIT_FAILURE;
+    }
+
+    printf("Listening on %s:%d...\n", IP, ntohs(address.sin_port));
+    return EXIT_SUCCESS;
 }
 
-void listen_for_incoming_connections(socket_t socket_fd, uint backlog) {
-    if (listen(socket_fd, backlog) < 0) {
-        shutdown_server(socket_fd, "Listen error");
+int accept_connection(int server_fd) {
+    int client_fd;
+    struct sockaddr_in client_address;
+    socklen_t client_size = sizeof(client_address);
+
+    if ((client_fd = accept(server_fd, (struct sockaddr *)&client_address, &client_size)) < 0) {
+        shutdown(server_fd, SHUT_RDWR);
+        perror("Accept error");
+        exit(EXIT_FAILURE);
     }
 
-    printf("Listening for connections on %s:%d...\n", SERVER_IP, SERVER_PORT);
-}
-
-void shutdown_server(socket_t server_socket, const char *error_message) {
-    shutdown(server_socket, SHUT_RDWR);
-
-    if (strlen(error_message) > 0) {
-        terminate_with_error(error_message);
-    } else {
-        exit(EXIT_SUCCESS);
-    }
+    printf("Connection accepted from %s:%d...\n", inet_ntoa(client_address.sin_addr),
+           ntohs(client_address.sin_port));
+    return client_fd;
 }
