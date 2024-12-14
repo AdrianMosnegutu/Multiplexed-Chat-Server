@@ -65,6 +65,10 @@ int main(int argc, char *argv[]) {
 
 void handle_connection() {
     int client_fd = accept_connection(server_fd);
+    if (client_fd < 0) {
+        printf("Client tried to connect but failed\n");
+        return;
+    }
 
     FD_SET(client_fd, &read_fds);
     max_fd = max(max_fd, client_fd);

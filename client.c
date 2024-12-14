@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include "utils/client_utils.h"
+#include "utils/general_utils.h"
 
 void read_username();
 void handle_communication();
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]) {
 
     read_username();
 
-    if (connect_to_address(client_fd = create_tcp_socket(), create_ipv4_address(IP, PORT)) < 0) {
+    if (connect_to_address(client_fd = create_tcp_socket(), create_ipv4_address(IP_ADDRESS, PORT)) < 0) {
         terminate_client("Error connecting to the server");
     }
 

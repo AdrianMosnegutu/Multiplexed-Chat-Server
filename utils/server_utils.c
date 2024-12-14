@@ -17,19 +17,17 @@ int start_server(int server_fd, struct sockaddr_in address) {
         return EXIT_FAILURE;
     }
 
-    printf("Listening on %s:%d...\n", IP, ntohs(address.sin_port));
+    printf("Listening on %s:%d...\n", IP_ADDRESS, ntohs(address.sin_port));
     return EXIT_SUCCESS;
 }
 
 int accept_connection(int server_fd) {
-    int client_fd;
     struct sockaddr_in client_address;
     socklen_t client_size = sizeof(client_address);
 
-    if ((client_fd = accept(server_fd, (struct sockaddr *)&client_address, &client_size)) < 0) {
-        shutdown(server_fd, SHUT_RDWR);
-        perror("Accept error");
-        exit(EXIT_FAILURE);
+    int client_fd = accept(server_fd, (struct sockaddr *)&client_address, &client_size);
+    if (client_fd < 0) {
+        return EXIT_FAILURE;
     }
 
     printf("Connection accepted from %s:%d...\n", inet_ntoa(client_address.sin_addr),
