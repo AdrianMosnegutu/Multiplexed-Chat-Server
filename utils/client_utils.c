@@ -5,14 +5,19 @@
 #include <unistd.h>
 
 int connect_to_address(int client_fd, struct sockaddr_in address) {
+    // Check the client socket's validity
     if (client_fd < 0) {
-        return EXIT_FAILURE;
+        return -1;
     }
 
-    if (connect(client_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
-        return EXIT_FAILURE;
+    // Connect the client socket to the provided IPv4 address
+    if ((connect(client_fd, (struct sockaddr *)&address, sizeof(address))) < 0) {
+        return -1;
     }
 
-    printf("Connected to %s:%d...\n", inet_ntoa(address.sin_addr), ntohs(address.sin_port));
+    const char *incoming_ip_address = inet_ntoa(address.sin_addr);
+    int incoming_port = ntohs(address.sin_port);
+    printf("Connected to %s:%d...\n", incoming_ip_address, incoming_port);
+
     return EXIT_SUCCESS;
 }
