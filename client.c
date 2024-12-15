@@ -28,8 +28,7 @@ int main(int argc, char *argv[]) {
 
     read_username();
 
-    if (connect_to_address(client_fd = create_tcp_socket(), create_ipv4_address(IP_ADDRESS, PORT)) <
-        0) {
+    if (connect_to_address(client_fd = create_tcp_socket(), create_ipv4_address(IP_ADDRESS, PORT)) < 0) {
         terminate_client("Server is closed");
     }
 
