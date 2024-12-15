@@ -5,12 +5,12 @@
 #include <string.h>
 #include <sys/types.h>
 
-#define IP_ADDRESS "127.0.0.1" // the server's IP address (set as localhost)
-#define PORT 8080              // the server's open port
+#define IP_ADDRESS "127.0.0.1"
+#define PORT 8080
 
-#define USERNAME_LEN 32                           // the maximum length of a username
-#define MESSAGE_LEN 256                           // the maximum length of a message
-#define RESPONSE_LEN (USERNAME_LEN + MESSAGE_LEN) // the maximum length of a response
+#define USERNAME_LEN 32
+#define MESSAGE_LEN 256
+#define RESPONSE_LEN (USERNAME_LEN + MESSAGE_LEN)
 
 /*
  *  @brief Create and return a configured TCP socket.
