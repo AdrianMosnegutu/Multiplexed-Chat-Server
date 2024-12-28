@@ -5,10 +5,10 @@
 
 /*
  *  @brief Connect a client socket to a given IPv4 address.
+ *
  *  @param `client_fd` The client socket we want to connect.
  *  @param `address` The address we want to connect to.
- *  @return `0` if the client socket connected successfuly,
- *  `-1` otherwise
+ *  @return `0` if the client socket connected successfuly, `-1` otherwise
  */
 int connect_to_address(int client_fd, struct sockaddr_in address);
 

@@ -4,14 +4,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int connect_to_address(int client_fd, struct sockaddr_in address) {
+int connect_to_address(int client_fd, struct sockaddr_in address)
+{
     // Check the client socket's validity
-    if (client_fd < 0) {
+    if (client_fd < 0)
+    {
         return -1;
     }
 
     // Connect the client socket to the provided IPv4 address
-    if ((connect(client_fd, (struct sockaddr *)&address, sizeof(address))) < 0) {
+    if ((connect(client_fd, (struct sockaddr *)&address, sizeof(address))) < 0)
+    {
         return -1;
     }
 

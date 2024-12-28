@@ -3,9 +3,13 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-int create_tcp_socket() { return socket(AF_INET, SOCK_STREAM, 0); }
+int create_tcp_socket()
+{
+    return socket(AF_INET, SOCK_STREAM, 0);
+}
 
-struct sockaddr_in create_ipv4_address(const char *ip_address, uint port) {
+struct sockaddr_in create_ipv4_address(const char *ip_address, uint port)
+{
     struct sockaddr_in address;
 
     address.sin_family = AF_INET;
@@ -15,4 +19,7 @@ struct sockaddr_in create_ipv4_address(const char *ip_address, uint port) {
     return address;
 }
 
-int max(int a, int b) { return a > b ? a : b; }
+int max(int a, int b)
+{
+    return a > b ? a : b;
+}

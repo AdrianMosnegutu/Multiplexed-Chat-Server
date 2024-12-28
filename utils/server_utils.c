@@ -4,19 +4,23 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int start_server(int server_fd, struct sockaddr_in address) {
+int start_server(int server_fd, struct sockaddr_in address)
+{
     // Check the server socket's validity
-    if (server_fd < 0) {
+    if (server_fd < 0)
+    {
         return -1;
     }
 
     // Bind the server socket to the provided IPv4 address
-    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
+    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0)
+    {
         return -1;
     }
 
     // Listen for incoming connections
-    if (listen(server_fd, 10) < 0) {
+    if (listen(server_fd, 10) < 0)
+    {
         return -1;
     }
 
@@ -24,13 +28,15 @@ int start_server(int server_fd, struct sockaddr_in address) {
     return EXIT_SUCCESS;
 }
 
-int accept_connection(int server_fd) {
+int accept_connection(int server_fd)
+{
     int client_fd;
     struct sockaddr_in client_address;
     socklen_t client_size = sizeof(client_address);
 
     // Accept the incoming connection
-    if ((client_fd = accept(server_fd, (struct sockaddr *)&client_address, &client_size)) < 0) {
+    if ((client_fd = accept(server_fd, (struct sockaddr *)&client_address, &client_size)) < 0)
+    {
         return -1;
     }
 
